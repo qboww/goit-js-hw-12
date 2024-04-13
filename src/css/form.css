@@ -18,7 +18,6 @@ form {
   padding: 8px;
   border: none;
   border-radius: 8px;
-  width: 100%;
 }
 
 input {
@@ -67,4 +66,10 @@ button {
 
 button:hover {
   background: #6c8cff;
+}
+
+@media (min-width: 875px) {
+  .input-form {
+    width: 100%;
+  }
 }
