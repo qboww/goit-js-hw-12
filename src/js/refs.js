@@ -1,4 +1,4 @@
-export const list = document.querySelector('.gallery');
+export const list = document.querySelector('.js-gallery');
 export const form = document.querySelector('.js-form');
-export const loader = document.querySelector('.loader');
-export const input = document.querySelector('.search-input');
+export const loader = document.querySelector('.js-loader');
+export const input = document.querySelector('.js-search-input');
