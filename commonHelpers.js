@@ -4,9 +4,11 @@ import{S as n,i as d}from"./assets/vendor-8c59ed88.js";(function(){const r=docum
               <img class="gallery-image" src="${e.webformatURL}" alt="${e.tags}" data-source="${e.largeImageURL}">
             </a>
           </div>
+
           <div class="gallery-tags">
             <h2 class="gallery-tags-header">${r(e.tags)}</h2>
           </div>
+
           <div class="desc-container">
             <ul class="list-data">
                 <li class="desc-item">
