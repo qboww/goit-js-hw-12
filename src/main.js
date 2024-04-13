@@ -1,4 +1,4 @@
-import { list, form, input, load } from './js/refs.js';
+import { list, form, input } from './js/refs.js';
 import { getPhotos } from './js/pixabay-api.js';
 import { createGallaryMarkup } from './js/render-functions.js';
 import { showLoader, hiddeLoader } from './js/loader.js';
@@ -25,7 +25,7 @@ function onSubmit(event) {
 
   console.log(searchQuery);
 
-  getPhotos(searchQuery, page)
+  getPhotos(searchQuery)
     .then(response => {
       if (!searchQuery || response.hits.length === 0) {
         return iziToast.error({
