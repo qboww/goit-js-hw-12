@@ -1,15 +1,20 @@
 .container {
   padding: 24px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  max-width: 416px;
+  margin: 0 auto;
 }
 
 form {
   display: flex;
   flex-direction: row;
-  gap: 16px;
+  gap: 8px;
+}
+
+.input-form {
+  background-color: #fff;
+  padding: 8px;
+  border: none;
+  border-radius: 8px;
 }
 
 input {
@@ -21,14 +26,21 @@ input {
   color: #808080;
 
   border-radius: 8px;
-  border: none;
-  max-width: 272px;
+  border: 3px solid #eff2ff;
   width: 100%;
   padding: 8px 16px;
+
+  transition: border-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    border 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 input:hover {
-  border-color: black;
+  border-color:  #e1e7ff;
+}
+
+input:focus {
+  outline-width: 0;
+  border-color:  #e1e7ff;
 }
 
 button {
