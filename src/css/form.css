@@ -46,8 +46,6 @@ input:focus {
 button {
   border-radius: 8px;
   padding: 8px 16px;
-  max-width: 91px;
-  width: 100%;
 
   background: #4e75ff;
   font-family: var(--font-family);
