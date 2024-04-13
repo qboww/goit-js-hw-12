@@ -9,14 +9,14 @@ export function createGallaryMarkup(array) {
         `<li class="gallery-item">
           <div class="image-container">
             <a class="gallery-link" href="${image.largeImageURL}">
-              <img class="gallery-image" src="${image.webformatURL}" alt="${
-          image.tags
-        }" data-source="${image.largeImageURL}">
+              <img class="gallery-image" src="${image.webformatURL}" alt="${image.tags}" data-source="${image.largeImageURL}">
             </a>
           </div>
+
           <div class="gallery-tags">
             <h2 class="gallery-tags-header">${capitalizeFirstLetter(image.tags)}</h2>
           </div>
+
           <div class="desc-container">
             <ul class="list-data">
                 <li class="desc-item">
