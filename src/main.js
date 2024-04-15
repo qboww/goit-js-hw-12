@@ -24,12 +24,12 @@ load.addEventListener('click', onClick);
 function onSubmit(event) {
   event.preventDefault();
 
+  showLoader();
+
   searchQuery = event.currentTarget.elements.search.value.trim();
   list.innerHTML = '';
   totalImagesLoaded = 0;
   page = 1;
-
-  showLoader();
 
   getPhotos(searchQuery, page)
     .then(response => {
