@@ -43,6 +43,10 @@ function onSubmit(event) {
 
       list.innerHTML = createGallaryMarkup(response.hits);
 
+      if (page === 1) {
+        load.classList.add('is-hidden');
+      }
+
       if (response.total > 15) {
         load.classList.remove('is-hidden');
       }
