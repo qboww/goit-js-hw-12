@@ -19,5 +19,6 @@ export async function getPhotos(query, page) {
     return response.data;
   } catch (error) {
     console.log(error);
+    throw error;
   }
 }
