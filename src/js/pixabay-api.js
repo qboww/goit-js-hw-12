@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export function getPhotos(query) {
   const API_KEY = '39798508-185d62676ae5604e87a61a702';
   const baseUrl = 'https://pixabay.com/api';
@@ -10,10 +12,10 @@ export function getPhotos(query) {
     safesearch: true,
   });
 
-  return fetch(`${baseUrl}/?${params}`).then(response => {
-    if (!response.ok) {
-      throw new Error(response.status);
-    }
-    return response.json();
-  });
+  return axios
+    .get(`${baseUrl}/?${params}`)
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => console.log(error));
 }
