@@ -1,4 +1,4 @@
-import { list, form, input } from './js/refs.js';
+import { list, form, load } from './js/refs.js';
 import { getPhotos } from './js/pixabay-api.js';
 import { createGallaryMarkup } from './js/render-functions.js';
 import { showLoader, hiddeLoader } from './js/loader.js';
@@ -14,31 +14,40 @@ const lightbox = new SimpleLightbox('.gallery a', {
   captionDelay: 250,
 });
 
+let page = 1;
+let searchQuery = null;
+let totalImagesLoaded = 0;
+
 form.addEventListener('submit', onSubmit);
+load.addEventListener('click', onClick);
 
 function onSubmit(event) {
   event.preventDefault();
 
-  const searchQuery = event.currentTarget.elements.search.value.trim();
-  showLoader();
+  searchQuery = event.currentTarget.elements.search.value.trim();
   list.innerHTML = '';
+  totalImagesLoaded = 0;
+  page = 1;
 
-  console.log(searchQuery);
+  showLoader();
 
-  getPhotos(searchQuery)
+  getPhotos(searchQuery, page)
     .then(response => {
       if (!searchQuery || response.hits.length === 0) {
         return iziToast.error({
           position: 'topRight',
           message: 'Sorry, there are no images matching your search query. Please try again!',
-          maxWidth: 330,
+          maxWidth: 300,
         });
       }
 
       list.innerHTML = createGallaryMarkup(response.hits);
 
+      if (response.total > 15) {
+        load.classList.remove('is-hidden');
+      }
+
       lightbox.refresh();
-      console.log(response.hits);
     })
     .catch(error => {
       console.log(error);
@@ -46,5 +55,26 @@ function onSubmit(event) {
     .finally(() => {
       hiddeLoader();
     });
-  input.value = '';
+
+  event.currentTarget.elements.search.value = '';
+}
+
+function onClick() {
+  page += 1;
+
+  getPhotos(searchQuery, page).then(response => {
+    const remainingImages = 100 - totalImagesLoaded;
+    const imagesToAdd = Math.min(response.hits.length, remainingImages);
+
+    list.insertAdjacentHTML('beforeend', createGallaryMarkup(response.hits.slice(0, imagesToAdd)));
+    totalImagesLoaded += imagesToAdd;
+
+    if (totalImagesLoaded >= 100) {
+      load.classList.add('is-hidden');
+      iziToast.warning({
+        message: 'You have reached the maximum limit of images (100).',
+        position: 'topRight',
+      });
+    }
+  });
 }

@@ -68,6 +68,10 @@ button:hover {
   background: #6c8cff;
 }
 
+.button-load-container{
+  padding: 20px;
+}
+
 @media (min-width: 875px) {
   .input-form {
     width: 100%;
