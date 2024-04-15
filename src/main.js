@@ -48,6 +48,12 @@ async function loadPhotos(query, page) {
       load.classList.remove('is-hidden');
     } else {
       load.classList.add('is-hidden');
+
+      iziToast.warning({
+        message: "We're sorry, but you've reached the end of search results.",
+        position: 'topRight',
+        maxWidth: 300,
+      });
     }
 
     lightbox.refresh();
