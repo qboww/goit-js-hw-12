@@ -17,7 +17,6 @@ const lightbox = new SimpleLightbox('.gallery a', {
 let page = 1;
 let searchQuery = null;
 let totalImagesLoaded = 0;
-let maxLoadedImages = 30;
 
 form.addEventListener('submit', onSubmit);
 load.addEventListener('click', onClick);
@@ -44,12 +43,12 @@ function onSubmit(event) {
 
       list.innerHTML = createGallaryMarkup(response.hits);
 
-      if (page === 1) {
-        load.classList.add('is-hidden');
-      }
-
-      if (response.total > 15) {
+      // Check if there are more images available for loading
+      const totalHits = response.totalHits;
+      if (totalHits > totalImagesLoaded) {
         load.classList.remove('is-hidden');
+      } else {
+        load.classList.add('is-hidden');
       }
 
       lightbox.refresh();
@@ -68,7 +67,7 @@ function onClick() {
   page += 1;
 
   getPhotos(searchQuery, page).then(response => {
-    const remainingImages = maxLoadedImages - totalImagesLoaded;
+    const remainingImages = response.totalHits - totalImagesLoaded;
     const imagesToAdd = Math.min(response.hits.length, remainingImages);
 
     list.insertAdjacentHTML('beforeend', createGallaryMarkup(response.hits.slice(0, imagesToAdd)));
@@ -83,10 +82,10 @@ function onClick() {
       behavior: 'smooth',
     });
 
-    if (totalImagesLoaded >= maxLoadedImages) {
+    if (totalImagesLoaded >= response.totalHits) {
       load.classList.add('is-hidden');
       iziToast.warning({
-        message: `You have reached the maximum limit of images (${maxLoadedImages + 15}).`,
+        message: `You have reached the maximum limit of images (${totalImagesLoaded}).`,
         position: 'topRight',
       });
     }
