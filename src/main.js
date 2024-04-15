@@ -74,7 +74,7 @@ function onClick() {
       .firstElementChild.getBoundingClientRect();
 
     window.scrollBy({
-      top: cardHeight * 2,
+      top: cardHeight * 2.2,
       behavior: 'smooth',
     });
 
