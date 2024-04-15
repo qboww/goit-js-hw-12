@@ -35,8 +35,9 @@
 .gallery-item {
   display: flex;
   flex-direction: column;
+
   width: 50%;
-  height: 50%;
+  height: auto;
 
   background-color: white;
   border-radius: 8px;

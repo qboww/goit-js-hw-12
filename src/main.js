@@ -69,6 +69,15 @@ function onClick() {
     list.insertAdjacentHTML('beforeend', createGallaryMarkup(response.hits.slice(0, imagesToAdd)));
     totalImagesLoaded += imagesToAdd;
 
+    const { height: cardHeight } = document
+      .querySelector('.gallery')
+      .firstElementChild.getBoundingClientRect();
+
+    window.scrollBy({
+      top: cardHeight * 2,
+      behavior: 'smooth',
+    });
+
     if (totalImagesLoaded >= 100) {
       load.classList.add('is-hidden');
       iziToast.warning({
@@ -76,5 +85,7 @@ function onClick() {
         position: 'topRight',
       });
     }
+
+    lightbox.refresh();
   });
 }
