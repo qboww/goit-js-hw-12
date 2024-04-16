@@ -10,13 +10,14 @@ import 'izitoast/dist/css/iziToast.min.css';
 let page = 1;
 let searchQuery = null;
 let totalImagesLoaded = 0;
+let firstSubmit = false;
 
 form.addEventListener('submit', onSubmit);
 load.addEventListener('click', onClick);
 
 function onSubmit(event) {
   event.preventDefault();
-
+  firstSubmit = false;
   showLoader();
 
   searchQuery = event.currentTarget.elements.search.value.trim();
@@ -33,6 +34,8 @@ async function loadPhotos(query, page) {
     const response = await getPhotos(query, page);
 
     if (!searchQuery || response.hits.length === 0) {
+      load.classList.add('is-hidden');
+
       return iziToast.error({
         position: 'topRight',
         message: 'Sorry, there are no images matching your search query. Please try again!',
@@ -41,6 +44,19 @@ async function loadPhotos(query, page) {
     }
 
     list.insertAdjacentHTML('beforeend', createGallaryMarkup(response.hits));
+
+    if (firstSubmit) {
+      const { height: cardHeight } = document
+        .querySelector('.gallery')
+        .lastElementChild.getBoundingClientRect();
+
+      window.scrollBy({
+        top: cardHeight * 2,
+        behavior: 'smooth',
+      });
+    }
+
+    firstSubmit = true;
     totalImagesLoaded += response.hits.length;
     const totalHits = response.totalHits;
 
@@ -67,14 +83,5 @@ async function loadPhotos(query, page) {
 function onClick() {
   page += 1;
 
-  loadPhotos(searchQuery, page).then(() => {
-    const { height: cardHeight } = document
-      .querySelector('.gallery')
-      .lastElementChild.getBoundingClientRect();
-
-    window.scrollBy({
-      top: cardHeight * 2,
-      behavior: 'smooth',
-    });
-  });
+  loadPhotos(searchQuery, page);
 }
